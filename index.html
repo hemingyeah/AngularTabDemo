@@ -28,68 +28,60 @@
         $stateProvider
             .state('wc', {
                 url: "/wc",
+                // abstract:　true,
                 templateUrl: "/views/route.html",
-                controller: 'tabDemoCtrl'
+                controller: 'tabDemoCtrl',
             })
             .state('wc.tab', {
                 url: '/tab',
+                resolve: {
+
+                },
                 views: {
-                    'route1': {
-                        templateUrl: '/views/route1.html',
-                        controller: 'route1Ctrl'
+                    'menu1': {
+                        templateProvider: function($templateCache) {
+                            return $templateCache.get('route1.html')
+                        },
+                        controller: 'menu1Ctrl'
                     },
-                    'route2': {
-                        templateUrl: '/views/route2.html',
-                        controller: 'route2Ctrl'
+                    'menu2': {
+                        templateProvider: function($templateCache) {
+                            return $templateCache.get('route2.html')
+                        },
+                        controller: 'menu2Ctrl'
                     },
-                    'route3': {
-                        templateUrl: '/views/route3.html',
-                        controller: 'route3Ctrl'
+                    'menu3': {
+                        templateProvider: function($templateCache) {
+                            return $templateCache.get('route3.html')
+                        },
+                        controller: 'menu3Ctrl'
                     },
-                    'route4': {
-                        templateUrl: '/views/route4.html',
-                        controller: 'route4Ctrl'
+                    'menu4': {
+                        templateProvider: function($templateCache) {
+                            return $templateCache.get('route4.html')
+                        },
+                        controller: 'menu4Ctrl'
                     },
-                    'route5': {
-                        templateUrl: '/views/route5.html',
-                        controller: 'route5Ctrl'
+                    'menu5': {
+                        templateProvider: function($templateCache) {
+                            return $templateCache.get('route5.html')
+                        },
+                        controller: 'menu5Ctrl'
                     }
                 }
             })
-            // .state('wc.route1', {
-            //     url: "/route1",
-            //     templateUrl: "/views/route1.html",
-            //     controller: 'route1Ctrl'
-            // })
-            // .state('wc.route2', {
-            //     url: "/route2",
-            //     templateUrl: "/views/route2.html",
-            //     controller: 'route2Ctrl'
-            // })
-            // .state('wc.route3', {
-            //     url: "/route3",
-            //     templateUrl: "/views/route3.html",
-            //     controller: 'route3Ctrl'
-            // })
-            // .state('wc.route4', {
-            //     url: "/route4",
-            //     templateUrl: "/views/route4.html",
-            //     controller: 'route4Ctrl'
-            // })
-            // .state('wc.route5', {
-            //     url: "/route5",
-            //     templateUrl: "/views/route5.html",
-            //     controller: 'route5Ctrl'
-            // })
     });
-    myapp.controller('tabDemoCtrl', function($scope, $http) {
+    myapp.controller('tabDemoCtrl', ['$scope', '$http', function($scope, $http) {
         $scope.id;
         $scope.tapItems = [];
         $scope.refresh;
         $scope.model = {};
         $scope.ifShow = function(data, evt) {
             $scope.id = data.id;
-            $scope.refresh();
+            // $scope.refresh();
+        }
+        $scope.closeTab = function(data, index) {
+            $scope.tapItems.splice(index, 1);
         }
         $scope.chaceItem = function(data, evt) {
             if ($.inArray(data, $scope.tapItems) === -1) {
@@ -108,68 +100,75 @@
                 data: ''
             }).success(function(data) {
                 $scope.model.test = data
-
             }).error(function(data) {})
         }
         $scope.Routes = [{
-            Base: "wc.tab",
-            id: '1',
-            url: "route1",
-            Name: "路由1"
+            id: 　 "1",
+            menu: "menu1",
+            herf: ""
         }, {
-            Base: "wc.tab",
-            id: '2',
-            url: "route2",
-            Name: "路由2"
+            id: 　 "2",
+            menu: "menu2",
+            herf: ""
         }, {
-            Base: "wc.tab",
-            id: '3',
-            url: "route3",
-            Name: "路由3"
+            id: 　 "3",
+            menu: "menu3",
+            herf: ""
         }, {
-            Base: "wc.tab",
-            id: '4',
-            url: "route4",
-            Name: "路由4"
+            id: 　 "4",
+            menu: "menu4",
+            herf: ""
         }, {
-            Base: "wc.tab",
-            id: '5',
-            url: "route5",
-            Name: "路由5"
+            id: 　 "5",
+            menu: "menu5",
+            herf: ""
         }]
-    });
-    myapp.controller('route1Ctrl', function($scope, $http) {
-        $scope.model = {}
-        $http({
-            method: 'GET',
-            url: 'http://trirand.com/blog/phpjqgrid/examples/jsonp/getjsonp.php?callback=?&qwery=longorders',
-            headers: {
-                // SessionId: sessionStorage.getItem("SessionID")
+    }]);
+    myapp.directive('iscstab', ['$scope', function($scope) {
+        return {
+            restrict: 'E',
+            template: function() {
+                var html = '<h2>test</h2>';
+                return html;
             },
-            params: '',
-            data: ''
-        }).success(function(data) {
-            $scope.model.test = data
+            link: function(scope, iElement, iAttrs) {}
+        };
+    }]);
+    myapp.controller('menu1Ctrl', ['$scope', function($scope) {
 
-        }).error(function(data) {})
+    }])
+    myapp.controller('menu2Ctrl', ['$scope', function($scope) {
 
-    })
-    myapp.controller('route2Ctrl', function($scope) {
-        $scope.model = {}
+    }])
+    myapp.controller('menu3Ctrl', ['$scope', function($scope) {
 
-    })
-    myapp.controller('route3Ctrl', function($scope) {
-        $scope.model = {}
+    }])
+    myapp.controller('menu4Ctrl', ['$scope', function($scope) {
 
-    })
-    myapp.controller('route4Ctrl', function($scope) {
-        $scope.model = {}
+    }])
+    myapp.controller('menu5Ctrl', ['$scope', function($scope) {
 
-    })
-    myapp.controller('route5Ctrl', function($scope) {
-        $scope.model = {}
-
-    })
+    }])
+    </script>
+    <script type="text/ng-template" id="route1.html">
+        <h2>route1</h2>
+        <input type="text" ng-model="model.test">
+    </script>
+    <script type="text/ng-template" id="route2.html">
+        <h2>route2</h2>
+        <input type="text" ng-model="model.test">
+    </script>
+    <script type="text/ng-template" id="route3.html">
+        <h2>route3</h2>
+        <input type="text" ng-model="model.test">
+    </script>
+    <script type="text/ng-template" id="route4.html">
+        <h2>route4</h2>
+        <input type="text" ng-model="model.test">
+    </script>
+    <script type="text/ng-template" id="route5.html">
+        <h2>route5</h2>
+        <input type="text" ng-model="model.test">
     </script>
 </body>
 
